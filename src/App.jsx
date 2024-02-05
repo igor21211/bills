@@ -30,7 +30,6 @@ function App() {
   const [active, setActive] = useState(false);
   const [friends, setFriends] = useState(initialFriends);
   const [selectFriend, setSelectFriend] = useState(null);
-  const [activeSelect, setActiveSelect] = useState(false);
   const toogleModelAddForm = () => {
     setActive(!active);
   };
@@ -38,14 +37,7 @@ function App() {
   const addToFriend = (friend) => {
     setFriends([...friends, friend]);
   };
-  const getFriend = (id) => {
-    const friend = friends.find((friend) => friend.id === id);
-    setSelectFriend(friend);
-    setActiveSelect(true);
-  };
-  const handleCloseBillForm = () => {
-    setActiveSelect(false);
-  };
+
   const decreaseBalance = (id, money) => {
     const newArr = friends.map((friend) => {
       if (friend.id === id) {
@@ -54,7 +46,6 @@ function App() {
       return friend;
     });
     setFriends(newArr);
-    setActiveSelect(false);
   };
   const inecreaseBalance = (id, money) => {
     const newArr = friends.map((friend) => {
@@ -64,24 +55,27 @@ function App() {
       return friend;
     });
     setFriends(newArr);
-    setActiveSelect(false);
+  };
+
+  const handleSelectedFriends = (friend) => {
+    setSelectFriend((selected) => (selected?.id === friend.id ? null : friend));
+    setActive(false);
   };
 
   return (
     <div className="app">
       <div className="sidebar">
         <FriendsList
-          close={handleCloseBillForm}
-          get={getFriend}
+          oNSelected={handleSelectedFriends}
           list={friends}
-          friend={activeSelect}
+          selected={selectFriend}
         />
         {active && <FormAddFriend add={addToFriend} />}
         <Button onClick={toogleModelAddForm}>
           {active ? "Close" : "Add friend"}
         </Button>
       </div>
-      {activeSelect && (
+      {selectFriend && (
         <FormSplitBill
           addMoney={inecreaseBalance}
           decMoney={decreaseBalance}
