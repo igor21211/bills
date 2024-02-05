@@ -46,6 +46,7 @@ function App() {
       return friend;
     });
     setFriends(newArr);
+    setSelectFriend(null);
   };
   const inecreaseBalance = (id, money) => {
     const newArr = friends.map((friend) => {
@@ -55,6 +56,7 @@ function App() {
       return friend;
     });
     setFriends(newArr);
+    setSelectFriend(null);
   };
 
   const handleSelectedFriends = (friend) => {
