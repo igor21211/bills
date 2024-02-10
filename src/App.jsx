@@ -79,6 +79,7 @@ function App() {
       </div>
       {selectFriend && (
         <FormSplitBill
+          key={selectFriend.id}
           addMoney={inecreaseBalance}
           decMoney={decreaseBalance}
           friend={selectFriend}
